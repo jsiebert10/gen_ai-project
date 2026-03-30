@@ -1,1 +1,2 @@
-# gen_ai-project
+# AIPathFinders
+Demo proposal
