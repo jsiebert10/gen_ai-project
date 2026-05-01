@@ -2,6 +2,7 @@
 export ENV_NAME ?= myenv
 PYTHON_VERSION = 3.12.12
 
+.PHONY: help create install install-rag setup clean lint ingest
 .PHONY: help create install install-backend setup clean lint run-backend
 
 help:  ## Show available commands
@@ -30,4 +31,14 @@ clean:  ## Remove conda environment
 
 lint:  ## Run ruff check and format
 	@conda run -n $(ENV_NAME) ruff check .
+	@conda run -n $(ENV_NAME) ruff format .
+
+install-rag:  ## Install RAG pipeline dependencies
+	@conda run -n $(ENV_NAME) pip install -r requirements-rag.txt
+
+CORPUS_DIR ?= data/corpus
+INDEX_DIR  ?= indices
+
+ingest:  ## Ingest corpus documents into the RAG vector store
+	@conda run -n $(ENV_NAME) python scripts/ingest.py $(CORPUS_DIR) --output-dir $(INDEX_DIR)
 	@conda run -n $(ENV_NAME) ruff format .

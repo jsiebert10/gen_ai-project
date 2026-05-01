@@ -1,0 +1,8 @@
+# RAG pipeline dependencies
+# Install with: pip install -r requirements-rag.txt
+# Embedding generation (OpenAI Embeddings API)
+openai==2.24.0
+# Vector arithmetic and index storage
+numpy==2.4.0
+# PDF text extraction
+pypdf>=3.0.0
