@@ -3,7 +3,6 @@ import React from 'react';
 export function PathwayAILogo() {
   return (
     <div className="flex items-center gap-2">
-      {/* Spark / asterisk icon */}
       <svg
         width="20"
         height="20"
@@ -19,7 +18,7 @@ export function PathwayAILogo() {
           strokeLinecap="round"
         />
       </svg>
-      <span className="text-base font-semibold text-gray-900">PathwayAI</span>
+      <span className="text-base font-semibold text-gray-900">AIPathFinder</span>
     </div>
   );
 }
