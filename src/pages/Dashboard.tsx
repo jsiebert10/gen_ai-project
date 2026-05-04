@@ -9,42 +9,76 @@ function getInitials(name: string): string {
   return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase()).join('');
 }
 
-function OverviewPanel() {
+const PROGRAMS_PER_PAGE = 10;
+
+function OverviewPanel({ onNavigate }: { onNavigate: (tab: DashboardTab) => void }) {
   const { dashboardData } = useApp();
   if (!dashboardData) return null;
   const { stats, activity } = dashboardData.overview;
 
   const statCards = [
     {
-      icon: <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2L2 6.5v4C2 14 5.134 17.165 9 18c3.866-.835 7-4 7-7.5v-4L9 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round"/><path d="M6 9l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M9 2L2 6.5v4C2 14 5.134 17.165 9 18c3.866-.835 7-4 7-7.5v-4L9 2z" stroke="currentColor" strokeWidth="1.5" strokeLinejoin="round" />
+          <path d="M6 9l2 2 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ),
       value: String(stats.programs_matched),
       label: 'Recommended Programs',
       subtext: `${stats.strong_matches} strong matches`,
+      target: 'programs' as DashboardTab,
     },
     {
-      icon: <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><rect x="2" y="2" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M2 7h14M7 2v14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <rect x="2" y="2" width="14" height="14" rx="2" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M2 7h14M7 2v14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      ),
       value: `${stats.course_plan_semesters} semesters`,
       label: 'Course Strategy',
       subtext: 'Optimized plan ready',
+      target: 'test_prep' as DashboardTab,
     },
     {
-      icon: <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.5"/><path d="M2 9h14M9 2C7 4.5 6 6.5 6 9s1 4.5 3 7M9 2c2 2.5 3 4.5 3 7s-1 4.5-3 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>,
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <circle cx="9" cy="9" r="7" stroke="currentColor" strokeWidth="1.5" />
+          <path d="M2 9h14M9 2C7 4.5 6 6.5 6 9s1 4.5 3 7M9 2c2 2.5 3 4.5 3 7s-1 4.5-3 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+        </svg>
+      ),
       value: `${stats.visa_steps_total} steps`,
       label: 'Visa Roadmap',
       subtext: `${stats.visa_steps_completed} completed`,
+      target: 'visa' as DashboardTab,
     },
     {
-      icon: <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 14l4-5 3 3 4-6 3 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+      icon: (
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <path d="M2 14l4-5 3 3 4-6 3 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      ),
       value: `${stats.career_employment_rate}%`,
       label: 'Career Outlook',
       subtext: 'Sponsorship likelihood',
+      target: 'career' as DashboardTab,
     },
   ];
 
   return (
     <div className="flex flex-col gap-6">
       <div className="grid grid-cols-2 gap-4 xl:grid-cols-4">
-        {statCards.map((card) => <StatCard key={card.label} {...card} />)}
+        {statCards.map((card) => (
+          <StatCard
+            key={card.label}
+            icon={card.icon}
+            value={card.value}
+            label={card.label}
+            subtext={card.subtext}
+            onArrowClick={() => onNavigate(card.target)}
+          />
+        ))}
       </div>
       <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
         <h2 className="mb-4 text-base font-semibold text-gray-900">Recent Activity</h2>
@@ -66,13 +100,18 @@ function OverviewPanel() {
 
 function ProgramsPanel() {
   const { dashboardData } = useApp();
+  const [page, setPage] = useState(1);
   if (!dashboardData) return null;
   const { query_summary, items } = dashboardData.programs;
+
+  const sorted = [...items].sort((a, b) => b.match_score - a.match_score);
+  const totalPages = Math.max(1, Math.ceil(sorted.length / PROGRAMS_PER_PAGE));
+  const pageItems = sorted.slice((page - 1) * PROGRAMS_PER_PAGE, page * PROGRAMS_PER_PAGE);
 
   return (
     <div className="flex flex-col gap-4">
       <p className="text-sm text-gray-500">{query_summary}</p>
-      {items.map((p: ProgramMatch, i: number) => (
+      {pageItems.map((p: ProgramMatch, i: number) => (
         <div key={i} className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -89,6 +128,21 @@ function ProgramsPanel() {
           </div>
         </div>
       ))}
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 pt-4">
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) => (
+            <button
+              key={n}
+              onClick={() => setPage(n)}
+              className={`flex h-8 w-8 items-center justify-center rounded-lg text-sm font-medium transition-colors ${
+                n === page ? 'bg-gray-900 text-white' : 'text-gray-500 hover:bg-gray-100'
+              }`}
+            >
+              {n}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -121,7 +175,9 @@ function VisaPanel() {
         <ul className="flex flex-col gap-2">
           {v.required_documents.map((doc, i) => (
             <li key={i} className="flex items-center gap-3 text-sm text-gray-700">
-              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-gray-200 text-xs text-gray-400">{i + 1}</span>
+              <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-gray-200 text-xs text-gray-400">
+                {i + 1}
+              </span>
               {doc}
             </li>
           ))}
@@ -155,11 +211,18 @@ function CareerPanel() {
       <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
         <div className="flex items-center justify-between mb-2">
           <h2 className="text-base font-semibold text-gray-900">{c.field} in {c.country}</h2>
-          <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">{c.job_market_outlook}</span>
+          <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+            {c.job_market_outlook}
+          </span>
         </div>
-        <p className="text-2xl font-semibold text-gray-900 mb-1">${c.average_salary_usd.toLocaleString()}<span className="text-sm font-normal text-gray-400">/yr avg</span></p>
+        <p className="text-2xl font-semibold text-gray-900 mb-1">
+          ${c.average_salary_usd.toLocaleString()}
+          <span className="text-sm font-normal text-gray-400">/yr avg</span>
+        </p>
         <p className="text-sm text-gray-500">Time to employment: {c.timeline_to_employment}</p>
-        {c.insight && <p className="mt-3 text-sm text-gray-600 border-t border-gray-50 pt-3">{c.insight}</p>}
+        {c.insight && (
+          <p className="mt-3 border-t border-gray-50 pt-3 text-sm text-gray-600">{c.insight}</p>
+        )}
       </div>
 
       <div className="grid grid-cols-2 gap-4">
@@ -189,7 +252,9 @@ function CareerPanel() {
         <h3 className="mb-3 text-sm font-semibold text-gray-900">In-Demand Skills</h3>
         <div className="flex flex-wrap gap-2">
           {c.in_demand_skills.map((skill, i) => (
-            <span key={i} className="rounded-lg bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">{skill}</span>
+            <span key={i} className="rounded-lg bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700">
+              {skill}
+            </span>
           ))}
         </div>
       </div>
@@ -223,10 +288,14 @@ function TestPrepPanel() {
           <div className="flex flex-col gap-3">
             {t.gap_analysis.map((g, i) => (
               <div key={i} className="flex items-center justify-between text-sm">
-                <span className="font-medium text-gray-900 w-16">{g.exam}</span>
+                <span className="w-16 font-medium text-gray-900">{g.exam}</span>
                 <span className="text-gray-500">Current: {g.current_score ?? '—'}</span>
                 <span className="text-gray-500">Target: {g.target_score}</span>
-                <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${g.status === 'meets requirement' ? 'bg-green-50 text-green-700' : 'bg-amber-50 text-amber-700'}`}>
+                <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${
+                  g.status === 'meets requirement'
+                    ? 'bg-green-50 text-green-700'
+                    : 'bg-amber-50 text-amber-700'
+                }`}>
                   {g.status}
                 </span>
               </div>
@@ -241,7 +310,9 @@ function TestPrepPanel() {
           <div className="flex flex-col gap-3">
             {t.critical_path.map((step, i) => (
               <div key={i} className="flex items-start gap-4">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-900 text-xs font-semibold text-white">{step.priority}</span>
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gray-900 text-xs font-semibold text-white">
+                  {step.priority}
+                </span>
                 <div>
                   <p className="text-sm font-medium text-gray-900">{step.exam} — {step.weeks_needed} weeks</p>
                   <p className="text-xs text-gray-500">{step.reason}</p>
@@ -256,12 +327,19 @@ function TestPrepPanel() {
         <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
           <h2 className="mb-4 text-base font-semibold text-gray-900">Resources</h2>
           {t.resources.map((r, i) => (
-            <div key={i} className="mb-4">
+            <div key={i} className="mb-4 last:mb-0">
               <p className="mb-2 text-sm font-semibold text-gray-700">{r.exam}</p>
               <div className="flex flex-col gap-2">
                 {r.recommendations.map((rec, j) => (
                   <div key={j} className="flex items-center justify-between text-sm">
-                    <span className="text-gray-900">{rec.name}</span>
+                    <a
+                      href={rec.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 underline"
+                    >
+                      {rec.name}
+                    </a>
                     <span className="text-xs text-gray-400">{rec.best_for}</span>
                   </div>
                 ))}
@@ -284,7 +362,10 @@ export function Dashboard() {
       <div className="flex h-screen items-center justify-center bg-gray-50">
         <div className="text-center">
           <p className="mb-4 text-gray-500">No dashboard data. Please complete the onboarding.</p>
-          <button onClick={() => navigateTo('step1')} className="text-sm font-medium text-gray-900 underline">
+          <button
+            onClick={() => navigateTo('step1')}
+            className="text-sm font-medium text-gray-900 underline"
+          >
             Start over
           </button>
         </div>
@@ -293,7 +374,7 @@ export function Dashboard() {
   }
 
   const panels: Record<DashboardTab, React.ReactNode> = {
-    overview: <OverviewPanel />,
+    overview: <OverviewPanel onNavigate={setActiveTab} />,
     programs: <ProgramsPanel />,
     visa: <VisaPanel />,
     career: <CareerPanel />,
@@ -306,7 +387,10 @@ export function Dashboard() {
       <div className="flex flex-1 flex-col overflow-auto">
         <header className="flex items-center justify-between border-b border-gray-100 bg-white px-8 py-4">
           <h1 className="text-xl font-semibold text-gray-900">Dashboard</h1>
-          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-200 text-sm font-semibold text-gray-600" title={profile.fullName}>
+          <div
+            className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-200 text-sm font-semibold text-gray-600"
+            title={profile.fullName}
+          >
             {initials}
           </div>
         </header>
