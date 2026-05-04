@@ -13,7 +13,6 @@ from formatters import format_dashboard
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["Dashboard"])
 
-# Graph compiled once on first request
 _graph = None
 
 
@@ -25,31 +24,17 @@ def _get_graph():
 
 
 class DashboardRequest(BaseModel):
-    """Mirrors the frontend UserProfile TypeScript type (camelCase)."""
     fullName: str
     undergraduateMajor: str
     gpa: float
-    dreamCareer: str
+    dreamCareer: str = ""
     targetCountries: list[str] = Field(default_factory=list)
-    annualBudget: int
+    annualBudget: int = 30000
     areasOfInterest: list[str] = Field(default_factory=list)
 
 
 @router.post("/dashboard")
 async def run_dashboard(request: DashboardRequest) -> dict:
-    """
-    Run the full multi-agent pipeline for a student profile.
-
-    Stages:
-      1. profile_agent  — normalize student input
-      2. match_agent    — find best-fit programs
-      3. visa_agent     ┐
-         career_agent   ├── parallel (thread pool via ainvoke)
-         testprep_agent ┘
-
-    Returns dashboard payload with keys:
-      overview, programs, visa, career, test_prep
-    """
     raw_input = {
         "fullName": request.fullName,
         "undergraduateMajor": request.undergraduateMajor,
