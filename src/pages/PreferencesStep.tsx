@@ -2,11 +2,17 @@ import React, { useState } from 'react';
 import { useApp } from '@/contexts/AppContext';
 import { OnboardingHeader } from '@/components/layout/OnboardingHeader';
 import { TagSelector } from '@/components/ui/TagSelector';
+import { RangeSlider } from '@/components/ui/RangeSlider';
 import { Button } from '@/components/ui/Button';
 import { HelpButton } from '@/components/ui/HelpButton';
 import { INTEREST_OPTIONS, DashboardData } from '@/types';
 
-export function InterestsStep() {
+function formatBudget(v: number): string {
+  if (v >= 1000) return `$${(v / 1000).toFixed(0)}k`;
+  return `$${v}`;
+}
+
+export function PreferencesStep() {
   const { profile, updateProfile, navigateTo, setDashboardData } = useApp();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -24,7 +30,7 @@ export function InterestsStep() {
       });
       if (!response.ok) {
         const detail = await response.json().catch(() => ({}));
-        throw new Error(detail?.detail || `Server error ${response.status}`);
+        throw new Error((detail as any)?.detail || `Server error ${response.status}`);
       }
       const data: DashboardData = await response.json();
       setDashboardData(data);
@@ -38,20 +44,31 @@ export function InterestsStep() {
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
-      <OnboardingHeader currentStep={3} />
+      <OnboardingHeader currentStep={2} />
 
       <main className="flex flex-1 flex-col items-center px-6 py-12">
         <div className="w-full max-w-xl">
-          <p className="mb-1 text-sm text-gray-400">Step 3 of 3</p>
-          <h1 className="mb-8 text-3xl font-semibold text-gray-900">Interests</h1>
+          <p className="mb-1 text-sm text-gray-400">Step 2 of 2</p>
+          <h1 className="mb-8 text-3xl font-semibold text-gray-900">Your Preferences</h1>
 
           <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
-            <TagSelector
-              label="Areas of Interest"
-              options={INTEREST_OPTIONS}
-              selected={profile.areasOfInterest}
-              onChange={(v) => updateProfile({ areasOfInterest: v })}
-            />
+            <div className="flex flex-col gap-8">
+              <TagSelector
+                label="Areas of Interest"
+                options={INTEREST_OPTIONS}
+                selected={profile.areasOfInterest}
+                onChange={(v) => updateProfile({ areasOfInterest: v })}
+              />
+              <RangeSlider
+                label="Annual Budget"
+                value={profile.annualBudget}
+                min={5000}
+                max={80000}
+                step={1000}
+                formatValue={formatBudget}
+                onChange={(v) => updateProfile({ annualBudget: v })}
+              />
+            </div>
           </div>
 
           {error && (
@@ -69,7 +86,7 @@ export function InterestsStep() {
       </main>
 
       <nav className="flex items-center justify-between border-t border-gray-100 bg-white px-8 py-5">
-        <Button variant="ghost" onClick={() => navigateTo('step2')} disabled={isLoading}>
+        <Button variant="ghost" onClick={() => navigateTo('step1')} disabled={isLoading}>
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

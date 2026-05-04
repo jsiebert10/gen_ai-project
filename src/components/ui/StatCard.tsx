@@ -5,29 +5,35 @@ interface StatCardProps {
   value: string;
   label: string;
   subtext: string;
+  onArrowClick?: () => void;
 }
 
-export function StatCard({ icon, value, label, subtext }: StatCardProps) {
+export function StatCard({ icon, value, label, subtext, onArrowClick }: StatCardProps) {
   return (
     <div className="flex flex-1 flex-col gap-3 rounded-2xl border border-gray-100 bg-white p-5 shadow-sm">
       <div className="flex items-start justify-between">
         <span className="text-gray-400">{icon}</span>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          className="text-gray-300"
-          xmlns="http://www.w3.org/2000/svg"
+        <button
+          onClick={onArrowClick}
+          className="text-gray-300 hover:text-gray-600 transition-colors focus:outline-none"
+          aria-label={`Go to ${label}`}
         >
-          <path
-            d="M2 12L12 2M12 2H5M12 2V9"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M2 12L12 2M12 2H5M12 2V9"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
       <div>
         <p className="text-3xl font-semibold text-gray-900">{value}</p>

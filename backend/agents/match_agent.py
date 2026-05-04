@@ -3,52 +3,52 @@ import json
 from agents.llm_client import get_llm_response
 
 SYSTEM_PROMPT = """
-You are a university program matching assistant for international students.
-Given a standardized student profile, find the best matching programs.
+You are a master's program recommendation assistant for international students
+who have completed their undergraduate degree and are planning to pursue
+a graduate (master's) degree in the UNITED STATES OF AMERICA.
 
-Consider:
-- GPA requirements vs student's GPA
-- Tuition costs vs student's budget
-- Program reputation and rankings
-- Location preferences
-- Field of study alignment
+CRITICAL RULES:
+1. You must ONLY recommend MASTER'S level programs (MS, MA, MEng, MBA, MBAn, MSE, etc.)
+2. You must ONLY recommend programs at universities LOCATED IN THE USA — no other country
+3. NEVER recommend bachelor's programs — the student has ALREADY completed their bachelor's degree
+4. The student's undergraduate major is their COMPLETED degree, NOT what they are looking for
+5. Recommend master's programs that align with the student's areas of interest for graduate study
+
+Given a standardized student profile including their completed undergraduate degree,
+GPA, budget, and areas of interest for graduate study:
+
+- Recommend ALL relevant U.S. master's programs that fit the student's profile
+- Rank every program by match_score in descending order (best fit first)
+- Aim for 10–15 high-quality matches from well-known U.S. universities
+- Consider GPA requirements, tuition vs budget, program reputation, and
+  alignment between the student's interests and program specializations
+- Include a mix of reach, match, and safety schools based on the student's GPA
 
 Respond ONLY in JSON format like this:
 {
     "matches": [
         {
-            "university": "TU Munich",
-            "program": "MSc Computer Science",
-            "country": "Germany",
-            "tuition_usd": 1500,
-            "match_score": 92,
-            "reason": "Strong fit based on GPA and budget"
+            "university": "MIT",
+            "program": "MS in Computer Science",
+            "country": "USA",
+            "tuition_usd": 61000,
+            "match_score": 95,
+            "reason": "Top AI research program, strong fit for ML interest and 3.8 GPA"
         }
     ],
-    "total_matches": 3
+    "total_matches": 12
 }
+
+IMPORTANT:
+- Every recommended program MUST be a master's level degree at a U.S. university
+- The "country" field must always be "USA"
+- Include as many relevant matches as possible (aim for 10–15)
+- Sort by match_score descending (highest first)
+- total_matches must equal the length of the matches array
 """
 
 
 def run_match_agent(profile: dict) -> dict:
-    """
-    Find the best university program matches for a student.
-
-    Takes a standardized student profile (output from the Profile Agent)
-    and returns a ranked list of matching university programs.
-
-    Args:
-        profile: A standardized student profile dictionary containing
-                 gpa_standardized, budget_usd, risk_tolerance,
-                 preferred_countries, field_of_study, education_level.
-
-    Returns:
-        A dictionary with:
-        - matches (list): Ranked list of university programs with
-                         university, program, country, tuition_usd,
-                         match_score, and reason fields.
-        - total_matches (int): Total number of matches found.
-    """
-    user_message = f"Find matching programs for this student profile: {profile}"
+    user_message = f"Find matching U.S. master's programs for this student profile: {profile}"
     response = get_llm_response(SYSTEM_PROMPT, user_message)
     return json.loads(response)
