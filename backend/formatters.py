@@ -41,7 +41,7 @@ def format_dashboard(state: GraphState) -> dict[str, Any]:
                 "visa_steps_completed": 0,
                 # → StatCard "Career Outlook"
                 "career_employment_rate": _sponsorship_to_pct(
-                    career.get("sponsorship_likelihood", "")
+                    career.get("sponsorship_likelihood") or ""
                 ),
             },
             "activity": [
