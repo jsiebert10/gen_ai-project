@@ -1,11 +1,9 @@
-export type Page = 'landing' | 'step1' | 'step2' | 'step3' | 'dashboard';
+export type Page = 'landing' | 'step1' | 'step2' | 'dashboard';
 
 export interface UserProfile {
   fullName: string;
   undergraduateMajor: string;
   gpa: number;
-  dreamCareer: string;
-  targetCountries: string[];
   annualBudget: number;
   areasOfInterest: string[];
 }
@@ -14,20 +12,27 @@ export const INITIAL_PROFILE: UserProfile = {
   fullName: '',
   undergraduateMajor: '',
   gpa: 3.5,
-  dreamCareer: '',
-  targetCountries: [],
   annualBudget: 30000,
   areasOfInterest: [],
 };
 
-export const COUNTRY_OPTIONS = ['USA', 'Canada', 'UK', 'Germany', 'Australia', 'Netherlands', 'Singapore'];
-
 export const INTEREST_OPTIONS = [
-  'AI/ML', 'Data Science', 'Software Engineering', 'Product Management',
-  'Finance', 'Consulting', 'UX Research', 'Cybersecurity',
+  'Artificial Intelligence',
+  'Machine Learning',
+  'Data Science',
+  'Natural Language Processing',
+  'Computer Vision',
+  'Robotics',
+  'Software Engineering',
+  'Cybersecurity',
+  'Cloud Computing',
+  'Human-Computer Interaction',
+  'Quantitative Finance',
+  'Business Analytics',
+  'Data Engineering',
+  'Health Informatics',
+  'Game Development',
 ];
-
-// ── Dashboard response types (match backend formatters.py output) ──────────
 
 export interface DashboardStats {
   programs_matched: number;
