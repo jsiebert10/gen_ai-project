@@ -18,7 +18,7 @@ export function BackgroundStep() {
 
       <main className="flex flex-1 flex-col items-center px-6 py-12">
         <div className="w-full max-w-xl">
-          <p className="mb-1 text-sm text-gray-400">Step 1 of 3</p>
+          <p className="mb-1 text-sm text-gray-400">Step 1 of 2</p>
           <h1 className="mb-8 text-3xl font-semibold text-gray-900">Your Background</h1>
 
           <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
@@ -49,17 +49,16 @@ export function BackgroundStep() {
         </div>
       </main>
 
-      {/* Navigation */}
       <nav className="flex items-center justify-between border-t border-gray-100 bg-white px-8 py-5">
         <Button variant="ghost" onClick={() => navigateTo('landing')}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M10 4L6 8l4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
           Home
         </Button>
         <Button onClick={() => navigateTo('step2')} disabled={!isValid}>
           Continue
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </Button>
