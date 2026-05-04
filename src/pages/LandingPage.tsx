@@ -22,7 +22,7 @@ const features = [
       </svg>
     ),
     title: 'Smart Matching',
-    description: 'AI-matched programs based on your profile, interests, and goals.',
+    description: 'AI-matched U.S. master\'s programs based on your profile, interests, and goals.',
   },
   {
     icon: (
@@ -37,7 +37,7 @@ const features = [
       </svg>
     ),
     title: 'Visa Guidance',
-    description: 'Step-by-step visa roadmaps tailored to your target countries.',
+    description: 'Step-by-step F-1 student visa roadmap tailored to studying in the USA.',
   },
   {
     icon: (
@@ -52,7 +52,7 @@ const features = [
       </svg>
     ),
     title: 'Career Insights',
-    description: 'Understand job markets and salary expectations post-graduation.',
+    description: 'Understand U.S. job markets, OPT/STEM OPT options, and salary expectations.',
   },
 ];
 
@@ -84,15 +84,15 @@ export function LandingPage() {
 
         {/* Headline */}
         <h1 className="mb-5 max-w-2xl text-5xl font-bold leading-tight tracking-tight text-gray-900">
-          Plan your master's journey
+          Plan your U.S. master's journey
           <br />
           with confidence
         </h1>
 
         {/* Subheadline */}
         <p className="mb-10 max-w-xl text-lg leading-relaxed text-gray-500">
-          PathwayAI helps international students discover the right programs, navigate visa
-          processes, and build a clear career path — all in one place.
+          AIPathFinder helps international students discover the right U.S. master's programs,
+          navigate the F-1 visa process, and build a clear career path — all in one place.
         </p>
 
         {/* CTA */}
@@ -120,7 +120,7 @@ export function LandingPage() {
 
       {/* Footer */}
       <footer className="border-t border-gray-100 py-5 text-center text-sm text-gray-400">
-        © 2026 PathwayAI · Built for international students
+        © 2026 AIPathFinder · Built for international students
       </footer>
     </div>
   );
