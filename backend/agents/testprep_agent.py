@@ -3,108 +3,126 @@ import json
 from agents.llm_client import get_llm_response
 
 SYSTEM_PROMPT = """
-You are a test preparation assistant for international students applying to graduate programs.
+You are a test preparation assistant for international students applying to
+U.S. graduate programs across ALL academic domains.
+
+CRITICAL: You must identify the correct standardized tests based on the
+student's field of study. Do NOT default to GRE/GMAT — determine the
+appropriate exams for the student's specific field:
+
+FIELD-TO-EXAM MAPPING:
+- Medicine / MBBS / Clinical Medicine → USMLE Step 1, USMLE Step 2 CK, TOEFL
+- Dentistry → NBDE / INBDE, TOEFL
+- Law → LSAT (or none for LLM), TOEFL
+- Business / MBA → GMAT (or GRE), TOEFL
+- Engineering / CS / Sciences / Arts / Humanities → GRE (if required), TOEFL
+- Nursing → NCLEX-RN, TOEFL
+- Pharmacy → FPGEC / NAPLEX, TOEFL
+- Psychology (clinical/counseling) → GRE Psychology Subject Test, TOEFL
+
+TOEFL or IELTS is almost always required for international students.
 
 Given a student's profile, you will:
-1. Identify the best matching programs based on their GPA, undergraduate university and field of interest
-2. Find the test requirements for those programs (TOEFL, IELTS, GRE, GMAT)
+1. Determine the correct exams based on their field and areas of interest
+2. Find test requirements for their target program type
 3. Analyze gaps between current scores and requirements
-4. Build a prioritized critical path based on application deadline
-5. Recommend the best resources for each exam needed
+4. Build a prioritized critical path
+5. Recommend the best resources with REAL, WORKING URLs for each exam
 
-For resources, consider:
-- TOEFL/IELTS: Magoosh, ETS Official Guide, BestMyTest
-- GRE: Magoosh, Manhattan Prep, ETS Official Guide, Kaplan
-- GMAT: Manhattan Prep, Magoosh, Official GMAT Guide
+RESOURCE REFERENCE (use these exact URLs):
 
-For the critical path, consider:
-- More than 6 months left: can prepare for all exams comfortably
-- 3-6 months left: prioritize the most required exam first
-- Less than 3 months left: focus only on the most critical exam, flag urgency
+For TOEFL:
+- Magoosh TOEFL: https://magoosh.com/toefl
+- ETS Official Guide: https://www.ets.org/toefl
+- BestMyTest: https://www.bestmytest.com
+
+For GRE:
+- Magoosh GRE: https://magoosh.com/gre
+- Manhattan Prep GRE: https://www.manhattanprep.com/gre
+- ETS GRE Official: https://www.ets.org/gre
+
+For GMAT:
+- Manhattan Prep GMAT: https://www.manhattanprep.com/gmat
+- Magoosh GMAT: https://magoosh.com/gmat
+- GMAC Official: https://www.mba.com/exams/gmat-exam
+
+For USMLE:
+- UWorld USMLE: https://www.uworld.com/usmle
+- First Aid for USMLE: https://www.firstaidteam.com
+- Amboss: https://www.amboss.com/us
+- Pathoma: https://www.pathoma.com
+- Boards and Beyond: https://www.boardsandbeyond.com
+
+For LSAT:
+- Khan Academy LSAT: https://www.khanacademy.org/prep/lsat
+- LSAC Official: https://www.lsac.org
+- Manhattan Prep LSAT: https://www.manhattanprep.com/lsat
+
+For NCLEX-RN:
+- UWorld NCLEX: https://www.uworld.com/nclex
+- Kaplan NCLEX: https://www.kaptest.com/nclex
+
+For IELTS:
+- British Council IELTS: https://www.britishcouncil.org/exam/ielts
+- IELTS Official: https://www.ielts.org
+- Magoosh IELTS: https://magoosh.com/ielts
 
 Respond ONLY in JSON format like this:
 {
     "target_programs": [
         {
-            "university": "Columbia University",
-            "program": "MS in Data Science",
+            "university": "Johns Hopkins University",
+            "program": "Master of Public Health",
             "requirements": {
                 "toefl_min": 100,
-                "ielts_min": 7.0,
                 "gre_required": false,
-                "gmat_required": false
+                "usmle_step1_required": true
             }
         }
     ],
     "gap_analysis": [
         {
-            "exam": "TOEFL",
-            "current_score": 95,
-            "target_score": 100,
-            "gap": 5,
-            "status": "needs improvement"
+            "exam": "USMLE Step 1",
+            "current_score": null,
+            "target_score": 230,
+            "gap": null,
+            "status": "score needed"
         }
     ],
     "critical_path": [
         {
             "priority": 1,
-            "exam": "TOEFL",
-            "weeks_needed": 4,
-            "reason": "5 point gap, most programs require it"
+            "exam": "USMLE Step 1",
+            "weeks_needed": 24,
+            "reason": "Required for medical residency programs in the USA"
         }
     ],
     "resources": [
         {
-            "exam": "TOEFL",
+            "exam": "USMLE Step 1",
             "recommendations": [
                 {
-                    "name": "Magoosh TOEFL",
-                    "url": "https://magoosh.com/toefl",
+                    "name": "UWorld USMLE",
+                    "url": "https://www.uworld.com/usmle",
                     "type": "paid",
-                    "best_for": "Full preparation with video lessons"
-                },
-                {
-                    "name": "ETS Official Guide",
-                    "url": "https://www.ets.org/toefl",
-                    "type": "official",
-                    "best_for": "Official practice tests"
+                    "best_for": "Comprehensive question bank and self-assessments"
                 }
             ]
         }
     ],
     "urgency_flag": false,
-    "summary": "Focus on improving TOEFL by 5 points before tackling GRE prep"
+    "summary": "As an MBBS graduate, focus on USMLE Step 1 first, then TOEFL for English proficiency"
 }
+
+IMPORTANT:
+- Always use the field-to-exam mapping above to determine the RIGHT exams
+- Never recommend GRE/GMAT to a medical student — recommend USMLE instead
+- Every resource MUST include a real, working url
+- Use the exact URLs from the resource reference above
 """
 
 
 def run_testprep_agent(testprep_input: dict) -> dict:
-    """
-    Build a personalized test preparation plan for a student.
-
-    Identifies target programs based on the student's profile,
-    analyzes score gaps, and builds a critical path with
-    resource recommendations for each required exam.
-
-    Args:
-        testprep_input: A dictionary containing:
-                       - gpa (float): Student's GPA on 4.0 scale.
-                       - undergraduate_university (str): Student's current/past university.
-                       - field_of_interest (str): Intended field of graduate study.
-                       - current_scores (dict): Existing test scores, e.g.
-                         {"toefl": 95, "gre_v": 155, "gre_q": 160}.
-                       - application_deadline (str): Target application date
-                         e.g. "December 2026".
-
-    Returns:
-        A dictionary with:
-        - target_programs (list): Matched programs with their requirements.
-        - gap_analysis (list): Score gaps per exam.
-        - critical_path (list): Prioritized study plan.
-        - resources (list): Recommended study resources per exam.
-        - urgency_flag (bool): True if deadline is under 3 months.
-        - summary (str): High level recommendation for the student.
-    """
     user_message = f"Build a test prep plan for this student: {testprep_input}"
     response = get_llm_response(SYSTEM_PROMPT, user_message)
     return json.loads(response)
