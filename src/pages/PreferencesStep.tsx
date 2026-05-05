@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useApp } from '@/contexts/AppContext';
 import { OnboardingHeader } from '@/components/layout/OnboardingHeader';
-import { TagSelector } from '@/components/ui/TagSelector';
+import { MultiSelectDropdown } from '@/components/ui/MultiSelectDropdown';
 import { RangeSlider } from '@/components/ui/RangeSlider';
 import { Button } from '@/components/ui/Button';
 import { HelpButton } from '@/components/ui/HelpButton';
-import { INTEREST_OPTIONS, DashboardData } from '@/types';
+import { INTEREST_CATEGORIES, DashboardData } from '@/types';
 
 function formatBudget(v: number): string {
   if (v >= 1000) return `$${(v / 1000).toFixed(0)}k`;
@@ -53,9 +53,9 @@ export function PreferencesStep() {
 
           <div className="rounded-2xl border border-gray-100 bg-white p-8 shadow-sm">
             <div className="flex flex-col gap-8">
-              <TagSelector
+              <MultiSelectDropdown
                 label="Areas of Interest"
-                options={INTEREST_OPTIONS}
+                categories={INTEREST_CATEGORIES}
                 selected={profile.areasOfInterest}
                 onChange={(v) => updateProfile({ areasOfInterest: v })}
               />
