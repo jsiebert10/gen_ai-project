@@ -593,6 +593,7 @@ export function Dashboard() {
     visa: <VisaPanel />,
     career: <CareerPanel />,
     test_prep: <TestPrepPanel />,
+    roadmap:   <RoadmapPanel />,
   };
 
   return (

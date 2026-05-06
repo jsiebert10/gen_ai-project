@@ -2,7 +2,7 @@ import React from 'react';
 import { useApp } from '@/contexts/AppContext';
 import { PathwayAILogo } from '@/components/ui/PathwayAILogo';
 
-export type DashboardTab = 'overview' | 'programs' | 'visa' | 'career' | 'test_prep';
+export type DashboardTab = 'overview' | 'programs' | 'visa' | 'career' | 'test_prep'| 'roadmap';
 
 interface DashboardSidebarProps {
   activeTab: DashboardTab;
@@ -57,6 +57,19 @@ const navItems: { id: DashboardTab; label: string; icon: React.ReactNode }[] = [
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z" stroke="currentColor" strokeWidth="1.5" />
         <path d="M5 6h6M5 9h4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    ),
+  },
+  {
+    id: 'roadmap',
+    label: 'Roadmap',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="2" cy="8" r="1.5" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="8" cy="4" r="1.5" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="14" cy="8" r="1.5" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M3.5 8h3L8 5.5M9.5 4h3l1 3.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M2 10v3M8 6v7M14 10v3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeDasharray="1 2" />
       </svg>
     ),
   },
