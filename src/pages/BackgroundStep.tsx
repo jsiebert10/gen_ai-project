@@ -35,6 +35,12 @@ export function BackgroundStep() {
                 value={profile.undergraduateMajor}
                 onChange={(e) => updateProfile({ undergraduateMajor: e.target.value })}
               />
+              <Input
+                label="Nationality"
+                placeholder="e.g. Chile, India, Brazil"
+                value={profile.nationality}
+                onChange={(e) => updateProfile({ nationality: e.target.value })}
+              />
               <RangeSlider
                 label="GPA"
                 value={profile.gpa}

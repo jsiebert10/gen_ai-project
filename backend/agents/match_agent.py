@@ -1,4 +1,5 @@
 import json
+from datetime import date
 
 from agents.llm_client import get_llm_response
 
@@ -30,6 +31,7 @@ Respond ONLY in JSON format like this:
         {
             "university": "MIT",
             "program": "MS in Computer Science",
+            "application_deadline": "December 1, 2026",
             "country": "USA",
             "tuition_usd": 61000,
             "match_score": 95,
@@ -45,10 +47,24 @@ IMPORTANT:
 - Include as many relevant matches as possible (aim for 10–15)
 - Sort by match_score descending (highest first)
 - total_matches must equal the length of the matches array
+
+DATES:
+- Today's date and the upcoming application cycle will be provided in the user message
+- All application_deadline values MUST be in the future — never return a past date
+- Use the upcoming cycle provided to you (e.g. 2026-2027)
+- If unsure of exact deadline, use December 1 of the upcoming application year
+
+Also fix the typo: "applitaction_deadline" → "application_deadline" in the JSON example.
 """
 
 
 def run_match_agent(profile: dict) -> dict:
-    user_message = f"Find matching U.S. master's programs for this student profile: {profile}"
+    today = date.today()
+
+    user_message = (
+        f"Today is {today.isoformat()}. "
+        f"All application_deadline values MUST be after {today.isoformat()}. "
+        f"Find matching programs for this student profile: {profile}"
+    )
     response = get_llm_response(SYSTEM_PROMPT, user_message)
     return json.loads(response)
