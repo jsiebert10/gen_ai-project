@@ -118,5 +118,6 @@ export interface DashboardData {
   visa: VisaData;
   career: CareerData;
   test_prep: TestPrepData;
+  roadmap: RoadmapData;
 }
 
