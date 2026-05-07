@@ -20,7 +20,16 @@ def get_candidate_programs(
         return []
 
     areas = areas_of_interest or []
-    search_terms = ([field_of_study] + areas) if field_of_study else areas
+
+    # Areas of interest = what the student WANTS to study (master's)
+    # field_of_study = undergraduate major (background, NOT the search target)
+    # Only fall back to field_of_study if no areas of interest were selected
+    if areas:
+        search_terms = areas
+    elif field_of_study:
+        search_terms = [field_of_study]
+    else:
+        search_terms = []
 
     conn = sqlite3.connect(str(DB_PATH))
     conn.row_factory = sqlite3.Row
