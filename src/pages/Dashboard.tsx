@@ -197,10 +197,7 @@ function VisaPanel() {
           </ul>
         </div>
       )}
-    </div>
-  );
-}
-{v.official_links && v.official_links.length > 0 && (
+      {v.official_links && v.official_links.length > 0 && (
   <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
     <h2 className="mb-4 text-base font-semibold text-gray-900">Official Links</h2>
     <div className="flex flex-col gap-3">
@@ -237,6 +234,9 @@ function VisaPanel() {
     Find US Embassy in {v.destination_country}
   </a>
 )}
+    </div>
+  );
+}
 
 function CareerPanel() {
   const { dashboardData } = useApp();
