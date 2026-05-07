@@ -63,11 +63,14 @@ def _career_node(state: GraphState) -> dict:
     profile = state["profile"]
     raw = state["raw_input"]
     countries = profile.get("preferred_countries") or raw.get("targetCountries") or ["USA"]
+    areas = raw.get("areasOfInterest", [])
+    undergraduate = raw.get("undergraduateMajor", "")
     career_input = {
-        "field_of_study": profile.get("field_of_study") or raw.get("undergraduateMajor", ""),
+        "field_of_study": ", ".join(areas) if areas else (profile.get("field_of_study") or undergraduate),
         "destination_country": countries[0],
         "education_level": profile.get("education_level", "master"),
-        "areas_of_interest": raw.get("areasOfInterest", []),
+        "areas_of_interest": areas,
+        "undergraduate_major": undergraduate,
     }
     return {"career": run_career_agent(career_input)}
 
