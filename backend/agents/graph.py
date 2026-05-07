@@ -10,6 +10,7 @@ Flow:
                   └─► roadmap_agent   ┘
                         └─► END
 """
+
 from __future__ import annotations
 
 from langgraph.graph import END, START, StateGraph
@@ -51,12 +52,15 @@ def _match_node(state: GraphState) -> dict:
 def _visa_node(state: GraphState) -> dict:
     profile = state["profile"]
     raw = state["raw_input"]
-    countries = profile.get("preferred_countries") or raw.get("targetCountries") or ["USA"]
+    countries = (
+        profile.get("preferred_countries") or raw.get("targetCountries") or ["USA"]
+    )
     visa_input = {
-        "nationality": "international student",
+        "nationality": raw.get("nationality") or "international student",
         "destination_country": countries[0],
         "program_start_date": "Fall 2026",
-        "field_of_study": profile.get("field_of_study") or raw.get("undergraduateMajor", ""),
+        "field_of_study": profile.get("field_of_study")
+        or raw.get("undergraduateMajor", ""),
     }
     return {"visa": run_visa_agent(visa_input)}
 
@@ -64,11 +68,15 @@ def _visa_node(state: GraphState) -> dict:
 def _career_node(state: GraphState) -> dict:
     profile = state["profile"]
     raw = state["raw_input"]
-    countries = profile.get("preferred_countries") or raw.get("targetCountries") or ["USA"]
+    countries = (
+        profile.get("preferred_countries") or raw.get("targetCountries") or ["USA"]
+    )
     areas = raw.get("areasOfInterest", [])
     undergraduate = raw.get("undergraduateMajor", "")
     career_input = {
-        "field_of_study": ", ".join(areas) if areas else (profile.get("field_of_study") or undergraduate),
+        "field_of_study": ", ".join(areas)
+        if areas
+        else (profile.get("field_of_study") or undergraduate),
         "destination_country": countries[0],
         "education_level": profile.get("education_level", "master"),
         "areas_of_interest": areas,
@@ -85,7 +93,9 @@ def _testprep_node(state: GraphState) -> dict:
     testprep_input = {
         "gpa": profile.get("gpa_standardized") or raw.get("gpa", 3.0),
         "undergraduate_university": "Current university",
-        "field_of_interest": ", ".join(areas) if areas else (profile.get("field_of_study") or raw.get("undergraduateMajor", "")),
+        "field_of_interest": ", ".join(areas)
+        if areas
+        else (profile.get("field_of_study") or raw.get("undergraduateMajor", "")),
         "areas_of_interest": areas,
         "undergraduate_major": raw.get("undergraduateMajor", ""),
         "current_scores": {},
@@ -102,7 +112,9 @@ def _roadmap_node(state: GraphState) -> dict:
     areas = raw.get("areasOfInterest", [])
     roadmap_input = {
         "gpa": profile.get("gpa_standardized") or raw.get("gpa", 3.0),
-        "field_of_study": ", ".join(areas) if areas else (profile.get("field_of_study") or raw.get("undergraduateMajor", "")),
+        "field_of_study": ", ".join(areas)
+        if areas
+        else (profile.get("field_of_study") or raw.get("undergraduateMajor", "")),
         "matched_programs": matched_programs,
         "current_scores": {},
         "requires_gre": any(p.get("requires_gre") for p in matched_programs),
@@ -127,6 +139,8 @@ def build_graph():
     builder.add_edge("match_agent", "career_agent")
     builder.add_edge("match_agent", "testprep_agent")
     builder.add_edge("match_agent", "roadmap_agent")
-    builder.add_edge(["visa_agent", "career_agent", "testprep_agent", "roadmap_agent"], END)
+    builder.add_edge(
+        ["visa_agent", "career_agent", "testprep_agent", "roadmap_agent"], END
+    )
 
     return builder.compile()
