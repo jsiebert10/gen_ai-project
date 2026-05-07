@@ -14,7 +14,7 @@ class Settings(BaseSettings):
 
     # Gemini
     gemini_api_key: str = ""
-    gemini_model: str = "gemini-2.5-fast"
+    gemini_model: str = "gemini-2.5-flash"
 
     # Data source
     data_source: str = "llm"  # "llm", "mockup", or "scraping"
