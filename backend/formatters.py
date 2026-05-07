@@ -1,4 +1,5 @@
 """Maps the final GraphState to the frontend dashboard JSON payload."""
+
 from __future__ import annotations
 
 from typing import Any
@@ -7,12 +8,13 @@ from agents.state import GraphState
 
 
 def format_dashboard(state: GraphState) -> dict[str, Any]:
-    profile  = state.get("profile") or {}
-    matches  = state.get("matches") or {}
-    visa     = state.get("visa") or {}
-    career   = state.get("career") or {}
+    profile = state.get("profile") or {}
+    matches = state.get("matches") or {}
+    visa = state.get("visa") or {}
+    career = state.get("career") or {}
     testprep = state.get("testprep") or {}
-    raw      = state.get("raw_input") or {}
+    raw = state.get("raw_input") or {}
+    roadmap = state.get("roadmap") or {}
 
     program_list: list = matches.get("matches") or []
     docs: list = visa.get("required_documents") or []
@@ -76,6 +78,12 @@ def format_dashboard(state: GraphState) -> dict[str, Any]:
             "resources": testprep.get("resources") or [],
             "urgency_flag": testprep.get("urgency_flag", False),
             "summary": testprep.get("summary", ""),
+        },
+        "roadmap": {
+            "overview": roadmap.get("overview") or {},
+            "milestones": roadmap.get("milestones") or [],
+            "gantt": roadmap.get("gantt") or [],
+            "urgent_flags": roadmap.get("urgent_flags") or [],
         },
     }
 

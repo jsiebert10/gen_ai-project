@@ -1,14 +1,14 @@
 """Dashboard route — runs the full LangGraph pipeline, returns all tab data."""
+
 from __future__ import annotations
 
 import logging
 
-from fastapi import APIRouter, HTTPException
-from pydantic import BaseModel, Field
-
 from agents.graph import build_graph
 from agents.state import GraphState
+from fastapi import APIRouter, HTTPException
 from formatters import format_dashboard
+from pydantic import BaseModel, Field
 
 logger = logging.getLogger(__name__)
 router = APIRouter(tags=["Dashboard"])
@@ -27,6 +27,7 @@ class DashboardRequest(BaseModel):
     fullName: str
     undergraduateMajor: str
     gpa: float
+    nationality: str = ""
     dreamCareer: str = ""
     targetCountries: list[str] = Field(default_factory=list)
     annualBudget: int = 30000
@@ -39,6 +40,7 @@ async def run_dashboard(request: DashboardRequest) -> dict:
         "fullName": request.fullName,
         "undergraduateMajor": request.undergraduateMajor,
         "gpa": request.gpa,
+        "nationality": request.nationality,
         "dreamCareer": request.dreamCareer,
         "targetCountries": request.targetCountries,
         "annualBudget": request.annualBudget,

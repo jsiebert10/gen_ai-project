@@ -1,4 +1,5 @@
 """Shared LangGraph state for the multi-agent pipeline."""
+
 from __future__ import annotations
 
 from typing import Any, TypedDict
@@ -6,7 +7,7 @@ from typing import Any, TypedDict
 
 class GraphState(TypedDict):
     # ── Input ──────────────────────────────────────────────────────────
-    raw_input: dict[str, Any]      # UserProfile from frontend (camelCase)
+    raw_input: dict[str, Any]  # UserProfile from frontend (camelCase)
 
     # ── Stage 1: profile_agent ─────────────────────────────────────────
     profile: dict[str, Any]
@@ -30,3 +31,6 @@ class GraphState(TypedDict):
     testprep: dict[str, Any]
     # keys: target_programs, gap_analysis, critical_path,
     #       resources, urgency_flag, summary
+
+    roadmap: dict[str, Any]
+    # keys: overview, milestones, gantt, urgent_flags
