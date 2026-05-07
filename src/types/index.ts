@@ -204,6 +204,43 @@ export interface TestPrepData {
   summary: string;
 }
 
+export interface GanttItem {
+  milestone: string;
+  category: string;
+  start_date: string;
+  end_date: string;
+  color: string;
+}
+
+export interface Milestone {
+  id: number;
+  title: string;
+  category: string;
+  start_date: string;
+  end_date: string;
+  status: string;
+  weekly_hours?: number;
+  weekly_actions: string[];
+  resources?: { name: string; url: string; type: string }[];
+  tips?: string;
+  target_score?: number;
+  current_score?: number | null;
+}
+
+export interface RoadmapData {
+  overview: {
+    earliest_deadline: string;
+    days_remaining: number;
+    months_available: number;
+    urgency_level: string;
+    summary: string;
+    total_milestones: number;
+  };
+  milestones: Milestone[];
+  gantt: GanttItem[];
+  urgent_flags: { message: string; type: string }[];
+}
+
 export interface DashboardData {
   overview: {
     stats: DashboardStats;
