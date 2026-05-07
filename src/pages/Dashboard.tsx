@@ -206,6 +206,7 @@ function VisaPanel() {
     <div className="flex flex-col gap-3">
       {v.official_links.map((link, i) => (
 
+        <a
           key={i}
           href={link.url}
           target="_blank"
