@@ -411,7 +411,7 @@ function GanttChart({ gantt }: { gantt: GanttItem[] }) {
               <div className="relative flex-1 h-6 rounded bg-gray-50">
                 <div
                   className={absolute top-1 h-4 rounded-full ${colorClass} opacity-80}
-                  style={{ left: ${leftPct}%, width: ${widthPct}% }}
+                  style={{ left: `${leftPct}%`, width: ${widthPct}% }}
                 />
               </div>
             </div>
@@ -423,7 +423,7 @@ function GanttChart({ gantt }: { gantt: GanttItem[] }) {
       <div className="mt-4 flex flex-wrap gap-3">
         {Object.entries(CATEGORY_COLORS).map(([cat, color]) => (
           <div key={cat} className="flex items-center gap-1.5">
-            <span className={h-2.5 w-2.5 rounded-full ${color}} />
+            <span className={`h-2.5 w-2.5 rounded-full ${color}`} />
             <span className="text-xs text-gray-500 capitalize">{cat.replace('_', ' ')}</span>
           </div>
         ))}
@@ -443,15 +443,15 @@ function RoadmapPanel() {
     <div className="flex flex-col gap-4">
 
       {/* Urgency banner */}
-      <div className={rounded-2xl border p-5 ${urgency.bg}}>
+      <div className={`rounded-2xl border p-5 ${urgency.bg}`}>
         <div className="flex items-start justify-between">
           <div>
-            <p className={text-sm font-semibold ${urgency.text}}>{urgency.label}</p>
-            <p className={mt-1 text-sm ${urgency.text} opacity-80}>{r.overview.summary}</p>
+            <p className={`text-sm font-semibold ${urgency.text}`}>{urgency.label}</p>
+            <p className={`mt-1 text-sm ${urgency.text} opacity-80`}>{r.overview.summary}</p>
           </div>
           <div className="text-right shrink-0 ml-4">
-            <p className={text-2xl font-bold ${urgency.text}}>{r.overview.days_remaining}</p>
-            <p className={text-xs ${urgency.text} opacity-70}>days remaining</p>
+            <p className={`text-2xl font-bold ${urgency.text}`}>{r.overview.days_remaining}</p>
+            <p className={`text-xs ${urgency.text} opacity-70`}>days remaining</p>
           </div>
         </div>
         <div className="mt-3 flex gap-4 text-xs">
@@ -488,7 +488,7 @@ function RoadmapPanel() {
                   className="flex w-full items-center justify-between px-4 py-3 text-left hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-center gap-3">
-                    <span className={h-2.5 w-2.5 rounded-full shrink-0 ${CATEGORY_COLORS[m.category] ?? 'bg-gray-400'}} />
+                    <span className={`h-2.5 w-2.5 rounded-full shrink-0 ${CATEGORY_COLORS[m.category] ?? 'bg-gray-400'}`} />
                     <span className="text-sm font-medium text-gray-900">{m.title}</span>
                   </div>
                   <div className="flex items-center gap-3 shrink-0">
@@ -502,7 +502,7 @@ function RoadmapPanel() {
                     )}
                     <svg
                       width="14" height="14" viewBox="0 0 14 14" fill="none"
-                      className={transition-transform text-gray-400 ${expanded === m.id ? 'rotate-180' : ''}}
+                      className={`transition-transform text-gray-400 ${expanded === m.id ? 'rotate-180' : ''}`}
                     >
                       <path d="M3 5l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
