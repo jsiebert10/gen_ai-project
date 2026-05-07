@@ -22,7 +22,8 @@ def format_dashboard(state: GraphState) -> dict[str, Any]:
 
     countries = profile.get("preferred_countries") or raw.get("targetCountries") or []
     country_str = f" in {', '.join(countries)}" if countries else ""
-    field = profile.get("field_of_study") or raw.get("undergraduateMajor", "")
+    areas = raw.get("areasOfInterest", [])
+    field = ", ".join(areas) if areas else "Selected"
 
     return {
         "overview": {
@@ -58,6 +59,9 @@ def format_dashboard(state: GraphState) -> dict[str, Any]:
             "application_fee_usd": visa.get("application_fee_usd", 0),
             "tips": visa.get("tips") or [],
             "warning": visa.get("warning", ""),
+            "official_links": visa.get("official_links") or [],
+            "embassy": visa.get("embassy") or {},
+            "embassy_map_url": visa.get("embassy_map_url", ""),
         },
         "career": {
             "field": career.get("field", field),
