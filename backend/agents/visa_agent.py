@@ -1,7 +1,8 @@
 import json
 
-from agents.llm_client import get_llm_response
 from services.rag_service import retrieve_visa_context
+
+from agents.llm_client import get_llm_response
 
 RAG_SYSTEM_PROMPT = """
 You are a visa guidance assistant for international students.
@@ -34,7 +35,29 @@ Respond ONLY in JSON format:
         "Prepare to show strong ties to your home country",
         "Have financial documents readily available for the interview"
     ],
-    "warning": "Visa interviews are mandatory for F-1 applicants"
+    "warning": "Visa interviews are mandatory for F-1 applicants",
+    "official_links": [
+        {
+            "label": "Complete Form DS-160",
+            "url": "https://ceac.state.gov/genniv/"
+        },
+        {
+            "label": "Pay SEVIS Fee (I-901)",
+            "url": "https://www.fmjfee.com"
+        },
+        {
+            "label": "Schedule Visa Interview",
+            "url": "https://www.usvisascheduling.com"
+        },
+        {
+            "label": "Find US Embassy in your country",
+            "url": "https://www.usembassy.gov"
+        }
+    ],
+    "embassy": {
+        "directory_url": "https://www.usembassy.gov",
+        "note": "Find your nearest US embassy or consulate"
+    }
 }
 """
 
@@ -63,7 +86,29 @@ Respond ONLY in JSON format:
         "Schedule your visa interview as early as possible",
         "Prepare to show strong ties to your home country"
     ],
-    "warning": "Visa interviews are mandatory for F-1 applicants"
+    "warning": "Visa interviews are mandatory for F-1 applicants",
+    "official_links": [
+        {
+            "label": "Complete Form DS-160",
+            "url": "https://ceac.state.gov/genniv/"
+        },
+        {
+            "label": "Pay SEVIS Fee (I-901)",
+            "url": "https://www.fmjfee.com"
+        },
+        {
+            "label": "Schedule Visa Interview",
+            "url": "https://www.usvisascheduling.com"
+        },
+        {
+            "label": "Find US Embassy in your country",
+            "url": "https://www.usembassy.gov"
+        }
+    ],
+    "embassy": {
+        "directory_url": "https://www.usembassy.gov",
+        "note": "Find your nearest US embassy or consulate"
+    }
 }
 """
 
@@ -71,7 +116,16 @@ Respond ONLY in JSON format:
 def run_visa_agent(visa_input: dict) -> dict:
     """Provide visa guidance using RAG-retrieved documents + LLM reasoning."""
     destination = visa_input.get("destination_country", "USA")
+    nationality = visa_input.get("nationality", "")
     field = visa_input.get("field_of_study", "")
+
+    # Build dynamic embassy map URL using actual nationality
+    embassy_map_url = (
+        f"https://www.google.com/maps/search/US+Embassy+{nationality.replace(' ', '+')}"
+        if nationality
+        else "https://www.google.com/maps/search/US+Embassy"
+    )
+
     query = (
         f"{destination} F-1 student visa requirements application process "
         f"documents fees SEVIS I-20 {field}"
@@ -87,11 +141,22 @@ def run_visa_agent(visa_input: dict) -> dict:
             f"--- End of retrieved documents ---\n\n"
             "Based on the above official documentation and the student's details, "
             "provide comprehensive visa guidance. Prefer facts from the documents "
-            "over general knowledge."
+            "over general knowledge. "
+            f"The student is from {nationality}. "
+            "Include all official_links and embassy fields in your response."
         )
         response = get_llm_response(RAG_SYSTEM_PROMPT, user_message)
     else:
-        user_message = f"Provide visa guidance for this student: {visa_input}"
+        user_message = (
+            f"Provide visa guidance for this student: {json.dumps(visa_input)}. "
+            f"The student is from {nationality}. "
+            "Include all official_links and embassy fields in your response."
+        )
         response = get_llm_response(FALLBACK_SYSTEM_PROMPT, user_message)
 
-    return json.loads(response)
+    result = json.loads(response)
+
+    # Inject dynamic embassy map URL — always accurate, never hallucinated
+    result["embassy_map_url"] = embassy_map_url
+
+    return result

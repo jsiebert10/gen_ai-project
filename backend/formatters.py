@@ -58,6 +58,9 @@ def format_dashboard(state: GraphState) -> dict[str, Any]:
             "application_fee_usd": visa.get("application_fee_usd", 0),
             "tips": visa.get("tips") or [],
             "warning": visa.get("warning", ""),
+            "official_links": visa.get("official_links") or [],
+            "embassy": visa.get("embassy") or {},
+            "embassy_map_url": visa.get("embassy_map_url", ""),
         },
         "career": {
             "field": career.get("field", field),

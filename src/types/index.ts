@@ -157,6 +157,9 @@ export interface VisaData {
   application_fee_usd: number;
   tips: string[];
   warning: string;
+  official_links: { label: string; url: string }[];
+  embassy: { directory_url: string; note: string };
+  embassy_map_url: string;
 }
 
 export interface CareerData {
