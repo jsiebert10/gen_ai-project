@@ -534,7 +534,7 @@ function RoadmapPanel() {
                         <p className="mb-2 text-xs font-semibold text-gray-500 uppercase tracking-wide">Resources</p>
                         <div className="flex flex-wrap gap-2">
                           {m.resources.map((res, i) => (
-                            
+                            <a
                               key={i}
                               href={res.url}
                               target="_blank"
