@@ -79,11 +79,13 @@ def _testprep_node(state: GraphState) -> dict:
     profile = state["profile"]
     raw = state["raw_input"]
     matched_programs = state.get("matches", {}).get("matches", [])
+    areas = raw.get("areasOfInterest", [])
     testprep_input = {
         "gpa": profile.get("gpa_standardized") or raw.get("gpa", 3.0),
         "undergraduate_university": "Current university",
-        "field_of_interest": profile.get("field_of_study") or raw.get("undergraduateMajor", ""),
-        "areas_of_interest": raw.get("areasOfInterest", []),
+        "field_of_interest": ", ".join(areas) if areas else (profile.get("field_of_study") or raw.get("undergraduateMajor", "")),
+        "areas_of_interest": areas,
+        "undergraduate_major": raw.get("undergraduateMajor", ""),
         "current_scores": {},
         "application_deadline": "December 2026",
         "matched_programs": matched_programs,
