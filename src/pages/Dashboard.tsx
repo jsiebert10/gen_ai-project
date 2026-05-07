@@ -411,7 +411,7 @@ function GanttChart({ gantt }: { gantt: GanttItem[] }) {
               <div className="relative flex-1 h-6 rounded bg-gray-50">
                 <div
                   className={`absolute top-1 h-4 rounded-full ${colorClass} opacity-80`}
-                  style={{ left: `${leftPct}%`, width: ${widthPct}% }}
+                  style={{ left: `${leftPct}%`, width: `${widthPct}%` }}
                 />
               </div>
             </div>
