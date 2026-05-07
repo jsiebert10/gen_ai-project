@@ -42,12 +42,17 @@ def _profile_node(state: GraphState) -> dict:
 def _match_node(state: GraphState) -> dict:
     profile = state["profile"]
     raw = state["raw_input"]
-    profile_with_interests = {
-        **profile,
+    match_input = {
+        "gpa_standardized": profile.get("gpa_standardized"),
+        "budget_usd": profile.get("budget_usd"),
+        "risk_tolerance": profile.get("risk_tolerance"),
+        "preferred_countries": profile.get("preferred_countries"),
+        "education_level": profile.get("education_level"),
         "areas_of_interest": raw.get("areasOfInterest", []),
         "undergraduate_major": raw.get("undergraduateMajor", ""),
+        "dream_career": raw.get("dreamCareer", ""),
     }
-    return {"matches": run_match_agent(profile_with_interests)}
+    return {"matches": run_match_agent(match_input)}
 
 
 def _visa_node(state: GraphState) -> dict:
