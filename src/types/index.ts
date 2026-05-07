@@ -3,6 +3,7 @@ export type Page = 'landing' | 'step1' | 'step2' | 'dashboard';
 export interface UserProfile {
   fullName: string;
   undergraduateMajor: string;
+  nationality: string;
   gpa: number;
   annualBudget: number;
   areasOfInterest: string[];
@@ -11,6 +12,7 @@ export interface UserProfile {
 export const INITIAL_PROFILE: UserProfile = {
   fullName: '',
   undergraduateMajor: '',
+  nationality: '',
   gpa: 3.5,
   annualBudget: 30000,
   areasOfInterest: [],
@@ -211,4 +213,5 @@ export interface DashboardData {
   visa: VisaData;
   career: CareerData;
   test_prep: TestPrepData;
+  roadmap: RoadmapData;
 }
