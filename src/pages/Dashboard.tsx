@@ -224,7 +224,7 @@ function VisaPanel() {
 )}
 
 {v.embassy_map_url && (
-
+  <a
     href={v.embassy_map_url}
     target="_blank"
     rel="noopener noreferrer"
