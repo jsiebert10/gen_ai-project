@@ -231,7 +231,7 @@ function VisaPanel() {
       <circle cx="8" cy="7" r="3" stroke="currentColor" strokeWidth="1.5"/>
       <path d="M8 2C5.239 2 3 4.239 3 7c0 3.5 5 9 5 9s5-5.5 5-9c0-2.761-2.239-5-5-5z" stroke="currentColor" strokeWidth="1.5"/>
     </svg>
-    Find US Embassy in {v.destination_country}
+    Find US Embassy in your country
   </a>
 )}
     </div>
