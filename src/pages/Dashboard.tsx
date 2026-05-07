@@ -200,6 +200,42 @@ function VisaPanel() {
     </div>
   );
 }
+{v.official_links && v.official_links.length > 0 && (
+  <div className="rounded-2xl border border-gray-100 bg-white p-6 shadow-sm">
+    <h2 className="mb-4 text-base font-semibold text-gray-900">Official Links</h2>
+    <div className="flex flex-col gap-3">
+      {v.official_links.map((link, i) => (
+
+          key={i}
+          href={link.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-between rounded-xl border border-gray-100 px-4 py-3 text-sm hover:bg-gray-50 transition-colors"
+        >
+          <span className="font-medium text-gray-900">{link.label}</span>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M3 11L11 3M11 3H6M11 3v5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </a>
+      ))}
+    </div>
+  </div>
+)}
+
+{v.embassy_map_url && (
+
+    href={v.embassy_map_url}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center justify-center gap-2 rounded-2xl border border-gray-100 bg-white p-4 shadow-sm text-sm font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+  >
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+      <circle cx="8" cy="7" r="3" stroke="currentColor" strokeWidth="1.5"/>
+      <path d="M8 2C5.239 2 3 4.239 3 7c0 3.5 5 9 5 9s5-5.5 5-9c0-2.761-2.239-5-5-5z" stroke="currentColor" strokeWidth="1.5"/>
+    </svg>
+    Find US Embassy in {v.destination_country}
+  </a>
+)}
 
 function CareerPanel() {
   const { dashboardData } = useApp();
