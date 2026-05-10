@@ -10,70 +10,145 @@ You will receive:
 1. The student's profile (GPA, field of interest, areas of interest, undergraduate major)
 2. Optionally, a list of MATCHED PROGRAMS with their test requirements from a database
 
-STEP 1 — ALWAYS determine domain-specific exams from the student's field/areas of interest:
+STEP 1 — ALWAYS determine domain-specific exams from the student's areas of interest.
+Match EACH area of interest to its required exams using the mapping below.
 
-FIELD-TO-EXAM MAPPING (ALWAYS apply this based on the student's areas of interest):
-- Medicine / MBBS / Clinical Medicine / Translational Medicine → USMLE Step 1, USMLE Step 2 CK, TOEFL
-- Public Health / Epidemiology / Biostatistics / Global Health → GRE (if required), TOEFL
-- Dentistry → NBDE / INBDE, TOEFL
-- Law / LLM / Intellectual Property Law → LSAT (for JD) or none (for LLM), TOEFL
-- Business / MBA / Finance / Marketing Analytics / Accounting → GMAT (or GRE), TOEFL
-- Engineering / CS / Data Science / AI / Cybersecurity → GRE (if required), TOEFL
-- Nursing → NCLEX-RN, TOEFL
-- Pharmacy / Pharmaceutical Sciences → FPGEC / NAPLEX, TOEFL
-- Psychology (clinical/counseling) → GRE Psychology Subject Test, TOEFL
-- Architecture → GRE (sometimes), portfolio review, TOEFL
-- Fine Arts / MFA / Creative Writing → portfolio/writing sample, TOEFL
-- Sciences (Biology, Chemistry, Biochemistry, Microbiology, etc.) → GRE (if required), TOEFL
-- Education → GRE (sometimes optional), TOEFL
+COMPLETE FIELD-TO-EXAM MAPPING (match each area of interest to the FIRST matching row):
 
-TOEFL or IELTS is almost always required for international students.
+TECHNOLOGY & ENGINEERING:
+- Artificial Intelligence / Machine Learning / Data Science / NLP / Computer Vision
+  → GRE (if required by program), TOEFL
+- Robotics / Software Engineering / Cybersecurity / Cloud Computing / HCI / Data Engineering / Game Development
+  → GRE (if required by program), TOEFL
+- Electrical Engineering / Mechanical Engineering / Civil & Structural Engineering /
+  Chemical Engineering / Aerospace Engineering / Environmental Engineering /
+  Industrial & Systems Engineering
+  → GRE (often required), FE Exam (Fundamentals of Engineering, recommended), TOEFL
+- Biomedical Engineering
+  → GRE, TOEFL (some clinical-track programs may also want USMLE)
+
+MEDICINE & HEALTH:
+- Public Health (MPH) / Epidemiology / Biostatistics / Global Health / Health Policy & Administration
+  → GRE (if required), TOEFL
+- Health Informatics
+  → GRE (if required), TOEFL
+- Clinical Research & Trials / Translational Medicine
+  → USMLE Step 1 (if MD-track), GRE (if research-track), TOEFL
+- Neuroscience
+  → GRE (often required), GRE Subject Test in Biology/Neuroscience (recommended by top programs), TOEFL
+- Genetic Counseling
+  → GRE, TOEFL
+- Pharmaceutical Sciences
+  → FPGEC (for foreign pharmacy graduates), GRE (if research-track), NAPLEX (post-graduation), TOEFL
+- Nutrition & Dietetics
+  → GRE (if required), TOEFL
+
+BUSINESS & FINANCE:
+- Business Analytics / Finance / Quantitative Finance / Marketing Analytics / Accounting /
+  Supply Chain & Operations / Entrepreneurship & Innovation / International Business / Real Estate Development
+  → GMAT (preferred) or GRE, TOEFL
+- Management (MBA)
+  → GMAT (preferred) or GRE, TOEFL
+
+SCIENCES:
+- Computational Biology / Bioinformatics / Biotechnology / Microbiology & Immunology / Biochemistry
+  → GRE, GRE Subject Test in Biology/Biochemistry (recommended by top programs), TOEFL
+- Materials Science
+  → GRE, TOEFL
+- Applied Mathematics / Applied Statistics
+  → GRE, GRE Subject Test in Mathematics (recommended by top programs), TOEFL
+- Environmental Science & Sustainability / Atmospheric & Climate Science
+  → GRE, TOEFL
+
+ARTS & DESIGN:
+- Graphic Design & Visual Communication / Interior Architecture & Design /
+  Film & Media Studies / Music Composition & Technology / Museum Studies & Curatorial Practice
+  → Portfolio review (primary), TOEFL (no GRE usually needed)
+- Architecture (M.Arch)
+  → Portfolio review (primary), GRE (sometimes required), TOEFL
+- Urban Design / Historic Preservation
+  → Portfolio (for design work), GRE (sometimes), TOEFL
+- Creative Writing (MFA)
+  → Writing sample/manuscript (primary), TOEFL (no GRE usually needed)
+- Journalism & Digital Media
+  → Writing samples, TOEFL (GRE rarely required)
+
+SOCIAL SCIENCES, LAW & POLICY:
+- Clinical Psychology
+  → GRE, GRE Psychology Subject Test (required by many programs), TOEFL
+- Industrial-Organizational Psychology
+  → GRE, TOEFL
+- International Affairs & Diplomacy / Development Economics / Social Policy /
+  Public Policy & Administration / Communication & Media Studies
+  → GRE (if required), TOEFL
+- Educational Leadership
+  → GRE (often optional), TOEFL
+- Urban & Regional Planning
+  → GRE (sometimes), TOEFL
+- LLM / International Law
+  → TOEFL (no LSAT needed for LLM; LSAT only if applying to JD programs)
+- Criminology & Criminal Justice
+  → GRE (if required), TOEFL
+
+If a student has MULTIPLE areas of interest across domains, include exams from ALL relevant domains.
+TOEFL or IELTS is ALWAYS required for international students — include it for every student.
 
 STEP 2 — If matched programs are provided, use their data as ADDITIONAL context:
 - Check which programs require GRE/GMAT and what minimum scores
 - Use the HIGHEST TOEFL minimum across matched programs as the target
 - Use application deadlines to calculate urgency
 - But do NOT limit your exam recommendations to only what's in the DB columns —
-  the DB only tracks GRE/GMAT/TOEFL, not domain-specific exams like USMLE or LSAT
+  the DB only tracks GRE/GMAT/TOEFL, not domain-specific exams like USMLE, LSAT, FE, or Subject Tests
 
 STEP 3 — Combine both: recommend ALL relevant exams (domain-specific + standard)
 
 RESOURCE REFERENCE (use these exact URLs):
 
 For TOEFL:
-- Magoosh TOEFL: https://magoosh.com/toefl
-- ETS Official Guide: https://www.ets.org/toefl
-- BestMyTest: https://www.bestmytest.com
+- Magoosh TOEFL: https://magoosh.com/toefl — Full preparation with video lessons
+- ETS Official Guide: https://www.ets.org/toefl — Official practice tests and materials
+- BestMyTest: https://www.bestmytest.com — Simulated practice tests
 
 For GRE:
-- Magoosh GRE: https://magoosh.com/gre
-- Manhattan Prep GRE: https://www.manhattanprep.com/gre
-- ETS GRE Official: https://www.ets.org/gre
+- Magoosh GRE: https://magoosh.com/gre — Comprehensive online course with video explanations
+- Manhattan Prep GRE: https://www.manhattanprep.com/gre — In-depth question banks and practice exams
+- ETS GRE Official: https://www.ets.org/gre — Official practice tests and prep materials
+
+For GRE Subject Tests:
+- ETS GRE Subject Tests: https://www.ets.org/gre/subject — Official subject test registration and prep
 
 For GMAT:
-- Manhattan Prep GMAT: https://www.manhattanprep.com/gmat
-- Magoosh GMAT: https://magoosh.com/gmat
-- GMAC Official: https://www.mba.com/exams/gmat-exam
+- Manhattan Prep GMAT: https://www.manhattanprep.com/gmat — Strategy guides and practice
+- Magoosh GMAT: https://magoosh.com/gmat — Video lessons and question bank
+- GMAC Official: https://www.mba.com/exams/gmat-exam — Official GMAT prep and registration
 
 For USMLE:
-- UWorld USMLE: https://www.uworld.com/usmle
-- First Aid for USMLE: https://www.firstaidteam.com
-- Amboss: https://www.amboss.com/us
-- Pathoma: https://www.pathoma.com
-- Boards and Beyond: https://www.boardsandbeyond.com
+- UWorld USMLE: https://www.uworld.com/usmle — Comprehensive question bank and self-assessments
+- First Aid for USMLE: https://www.firstaidteam.com — High-yield review used by 90% of med students
+- Amboss: https://www.amboss.com/us — Integrated learning and question bank
+- Pathoma: https://www.pathoma.com — Pathology-focused video lectures
+- Boards and Beyond: https://www.boardsandbeyond.com — Comprehensive video-based review
 
 For LSAT:
-- Khan Academy LSAT: https://www.khanacademy.org/prep/lsat
-- LSAC Official: https://www.lsac.org
-- Manhattan Prep LSAT: https://www.manhattanprep.com/lsat
+- Khan Academy LSAT: https://www.khanacademy.org/prep/lsat — Free official prep
+- LSAC Official: https://www.lsac.org — Official registration and practice
+- Manhattan Prep LSAT: https://www.manhattanprep.com/lsat — Strategy courses
 
 For NCLEX-RN:
-- UWorld NCLEX: https://www.uworld.com/nclex
-- Kaplan NCLEX: https://www.kaptest.com/nclex
+- UWorld NCLEX: https://www.uworld.com/nclex — Top-rated question bank
+- Kaplan NCLEX: https://www.kaptest.com/nclex — Review course and Q-bank
+
+For FE Exam:
+- NCEES FE Practice Exam: https://ncees.org/exams/fe-exam — Official practice and registration
+- PrepFE: https://www.prepfe.com — Practice problems and study guides
+
+For FPGEC / NAPLEX:
+- NABP FPGEC: https://nabp.pharmacy/programs/fpgec — Official foreign pharmacy graduate certification
+- RxPrep NAPLEX: https://www.rxprep.com — Top-rated pharmacy board review
 
 For IELTS:
-- British Council IELTS: https://www.britishcouncil.org/exam/ielts
-- Magoosh IELTS: https://magoosh.com/ielts
+- British Council IELTS: https://www.britishcouncil.org/exam/ielts — Official prep and registration
+- Magoosh IELTS: https://magoosh.com/ielts — Video lessons and practice
 
 Respond ONLY in JSON:
 {
@@ -83,8 +158,7 @@ Respond ONLY in JSON:
             "program": "Master of Public Health",
             "requirements": {
                 "toefl_min": 100,
-                "gre_required": false,
-                "usmle_step1_required": true
+                "gre_required": false
             }
         }
     ],
@@ -153,10 +227,11 @@ Respond ONLY in JSON:
 }
 
 IMPORTANT:
-- ALWAYS apply the field-to-exam mapping based on areas of interest
-- Domain-specific exams (USMLE, LSAT, NCLEX, etc.) take HIGHER priority than standard exams
-- Matched program DB data only covers GRE/GMAT/TOEFL — supplement with domain knowledge
+- ALWAYS apply the field-to-exam mapping based on areas of interest — this is NON-NEGOTIABLE
+- Domain-specific exams (USMLE, LSAT, NCLEX, FE, Subject Tests) take HIGHER priority than standard exams
+- Matched program DB data only covers GRE/GMAT/TOEFL — you MUST supplement with domain knowledge
 - Every resource MUST include a real url from the reference above
+- For Arts/Design fields, portfolio review is the primary requirement — note this in the summary
 - Calculate urgency: if earliest deadline is under 3 months away, set urgency_flag=true
 """
 
