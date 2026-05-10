@@ -79,9 +79,20 @@ def get_candidate_programs(
         prog["application_deadline_spring"] = _add_year(
             prog.get("application_deadline_spring"), 2027
         )
+        prog["tuition_usd_annual"] = _annual_tuition(prog)
         programs.append(prog)
 
+    if budget_usd:
+        programs = [p for p in programs if p["tuition_usd_annual"] <= budget_usd]
+
     return programs
+
+
+def _annual_tuition(prog: dict) -> int:
+    """Convert total program tuition to annual tuition."""
+    total = prog.get("tuition_usd_total") or 0
+    months = prog.get("duration_months") or 24
+    return round(total * 12 / months)
 
 
 def _row_to_dict(row: sqlite3.Row) -> dict[str, Any]:
